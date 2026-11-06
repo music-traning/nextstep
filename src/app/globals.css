@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-slate-900 font-sans leading-relaxed selection:bg-sky-700 selection:text-white;
+  }
+}
+
+/* キーボード操作時のフォーカスリング視認性向上（Accessibility配慮） */
+:focus-visible {
+  outline: 3px solid #0284c7;
+  outline-offset: 3px;
+}
