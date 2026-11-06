@@ -1,8 +1,6 @@
-import Image from "next/image";
 import {
   ArrowRight,
   Award,
-  Briefcase,
   Building2,
   CheckCircle2,
   Compass,
@@ -20,6 +18,18 @@ import {
 import { FadeInUp } from "@/components/FadeInUp";
 
 const CTA_URL = "https://forms.gle/dummy_url_nextstep";
+
+const HERO_IMG_BASE = "https://images.unsplash.com/photo-1552664730-d307ca884978";
+const HERO_SRC = `${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=800&q=75`;
+const HERO_SRCSET = `${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=480&q=72 480w, ${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=800&q=75 800w, ${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=1200&q=75 1200w`;
+
+function buildUnsplashSet(baseUrl: string) {
+  return {
+    src: `${baseUrl}?auto=format&fit=crop&fm=webp&w=640&q=72`,
+    srcSet: `${baseUrl}?auto=format&fit=crop&fm=webp&w=420&q=70 420w, ${baseUrl}?auto=format&fit=crop&fm=webp&w=640&q=72 640w, ${baseUrl}?auto=format&fit=crop&fm=webp&w=960&q=75 960w`,
+    sizes: "(max-width: 640px) 92vw, (max-width: 1024px) 88vw, 560px",
+  };
+}
 
 const PAIN_POINTS = [
   {
@@ -66,8 +76,7 @@ const USP_LIST = [
     ],
     idealOutcome: "「独学で何度も挫折した状態」から、週単位で成長を実感できる自律的な学習習慣へ。",
     icon: UserCheck,
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80",
+    imageBase: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2",
     imageAlt: "オンラインで1on1の伴走型メンタリングを受けるビジネスパーソン",
   },
   {
@@ -83,8 +92,7 @@ const USP_LIST = [
     ],
     idealOutcome: "「知識はあるが実務で使えない状態」から、具体的な成果物で実力を証明できる即戦力人材へ。",
     icon: FileCode2,
-    image:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80",
+    imageBase: "https://images.unsplash.com/photo-1531482615713-2afd69097998",
     imageAlt: "実践型ワークショップで課題解決とポートフォリオ制作に取り組む受講生チーム",
   },
   {
@@ -100,8 +108,7 @@ const USP_LIST = [
     ],
     idealOutcome: "来秋には自信を持って独立・転職できている、市場価値の高い次世代ビジネスパーソンへ。",
     icon: Handshake,
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80",
+    imageBase: "https://images.unsplash.com/photo-1560250097-0b93528c311a",
     imageAlt: "キャリアアップと独立・転職を実現し自信に満ちたビジネスパーソン",
   },
 ];
@@ -114,8 +121,7 @@ const TESTIMONIALS = [
     beforeAfter: "年収・キャリアの停滞感を打破し、IT・AI活用を牽引するPM職へキャリアチェンジ",
     comment:
       "営業職として15年働き、今後のキャリアに頭打ち感を感じて受講を決意しました。最初は専門用語すら不安でしたが、週1回の1on1でメンターが私の業務経験に引き寄せて解説してくれたおかげで、一度も挫折せずに完走できました。ワークショップで制作した業務改善プロトタイプが転職活動で高く評価され、念願だったDX推進部門への転職を実現できました。",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+    avatarBase: "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
     avatarAlt: "受講生の声 1人目のプロフィール写真",
   },
   {
@@ -125,8 +131,7 @@ const TESTIMONIALS = [
     beforeAfter: "実務直結のポートフォリオを武器に、受講修了から半年後に独立を達成",
     comment:
       "独学ではAIツールの表面的な使い方しか身につかず、クライアントに価値提供できるレベルには程遠い状態でした。Next Step 2027の実践型ワークショップでは、企業案件さながらの厳しいフィードバックを通じて『現場で使える提案力と実装力』が鍛えられました。キャリア支援チームのサポートもあり、今年の秋には自信を持って独立を果たすことができました。",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
+    avatarBase: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
     avatarAlt: "受講生の声 2人目のプロフィール写真",
   },
   {
@@ -136,8 +141,7 @@ const TESTIMONIALS = [
     beforeAfter: "中堅社員15名のリスキリング研修に導入し、社内業務自動化プロジェクトを3件創出",
     comment:
       "社員向けのeラーニングを導入しても完走率が低く、実務に結びつかないことが長年の課題でした。Next Step 2027はメンターによる伴走サポートが手厚く、通常業務と並行しながらでも参加社員全員が最終課題までやり切ることができました。研修の成果物がそのまま社内の業務改善企画として立ち上がり、投資対効果の高さを実感しています。",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+    avatarBase: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
     avatarAlt: "受講生の声 3人目のプロフィール写真",
   },
 ];
@@ -307,7 +311,7 @@ export default function LandingPage() {
                 </p>
               </div>
 
-              {/* 右カラム：メインビジュアル（LCP画像 priority付与） */}
+              {/* 右カラム：メインビジュアル（LCP最適化・WebP・レスポンシブsrcSet付与） */}
               <div className="lg:col-span-5">
                 <div className="relative mx-auto max-w-lg lg:max-w-none">
                   <div
@@ -315,14 +319,15 @@ export default function LandingPage() {
                     aria-hidden="true"
                   />
                   <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-navy-900 shadow-2xl">
-                    <Image
-                      src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
+                    <img
+                      src={HERO_SRC}
+                      srcSet={HERO_SRCSET}
+                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 512px, 480px"
                       alt="Next Step 2027で実践的なデジタルスキルとキャリア戦略を学ぶビジネスパーソンたち"
-                      width={1200}
-                      height={850}
-                      priority
+                      width={800}
+                      height={600}
                       fetchPriority="high"
-                      sizes="(max-width: 1024px) 100vw, 42vw"
+                      decoding="async"
                       className="h-auto w-full object-cover aspect-[4/3]"
                     />
                     <div className="bg-navy-950/90 px-5 py-4 border-t border-white/10 flex items-center justify-between gap-4">
@@ -372,7 +377,7 @@ export default function LandingPage() {
             {/* チェックリスト＋ペルソナカードUI */}
             <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
               {PAIN_POINTS.map((item, idx) => (
-                <FadeInUp key={item.category} delay={idx * 0.08}>
+                <FadeInUp key={item.category} delay={idx * 0.06}>
                   <article className="h-full rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm transition-shadow hover:shadow-md flex flex-col justify-between">
                     <div>
                       <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100">
@@ -406,7 +411,7 @@ export default function LandingPage() {
             </div>
 
             {/* 課題から解決策へのブリッジ */}
-            <FadeInUp delay={0.2} className="mt-14">
+            <FadeInUp delay={0.12} className="mt-14">
               <div className="rounded-2xl bg-navy-900 px-6 py-8 sm:px-10 sm:py-10 text-white shadow-lg">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                   <div className="space-y-2">
@@ -464,6 +469,7 @@ export default function LandingPage() {
               {USP_LIST.map((usp, index) => {
                 const IconComponent = usp.icon;
                 const isReversed = index % 2 === 1;
+                const imgProps = buildUnsplashSet(usp.imageBase);
 
                 return (
                   <FadeInUp key={usp.number}>
@@ -536,13 +542,15 @@ export default function LandingPage() {
                         }`}
                       >
                         <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-lg">
-                          <Image
-                            src={usp.image}
+                          <img
+                            src={imgProps.src}
+                            srcSet={imgProps.srcSet}
+                            sizes={imgProps.sizes}
                             alt={usp.imageAlt}
-                            width={1000}
-                            height={700}
+                            width={640}
+                            height={440}
                             loading="lazy"
-                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            decoding="async"
                             className="h-auto w-full object-cover aspect-[16/11]"
                           />
                         </div>
@@ -598,55 +606,62 @@ export default function LandingPage() {
             </FadeInUp>
 
             <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-3">
-              {TESTIMONIALS.map((voice, idx) => (
-                <FadeInUp key={voice.name} delay={idx * 0.1}>
-                  <article className="h-full flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
-                    <div>
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="inline-block rounded-md bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">
-                          {voice.tag}
-                        </span>
-                        <GraduationCap
-                          className="h-5 w-5 text-slate-500"
-                          aria-hidden="true"
-                        />
-                      </div>
+              {TESTIMONIALS.map((voice, idx) => {
+                const avatarSrc = `${voice.avatarBase}?auto=format&fit=crop&fm=webp&w=112&q=75`;
+                const avatarSrcSet = `${voice.avatarBase}?auto=format&fit=crop&fm=webp&w=56&q=75 1x, ${voice.avatarBase}?auto=format&fit=crop&fm=webp&w=112&q=75 2x`;
 
-                      <div className="mt-5 rounded-xl bg-navy-900 p-4 text-white">
-                        <p className="text-xs font-semibold text-sky-300">
-                          AFTERNEXT STEP
-                        </p>
-                        <p className="mt-1 text-sm font-bold leading-snug">
-                          {voice.beforeAfter}
-                        </p>
-                      </div>
-
-                      <blockquote className="mt-5 text-sm sm:text-base text-slate-700 leading-relaxed">
-                        「{voice.comment}」
-                      </blockquote>
-                    </div>
-
-                    <div className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-4">
-                      <Image
-                        src={voice.avatar}
-                        alt={voice.avatarAlt}
-                        width={56}
-                        height={56}
-                        loading="lazy"
-                        className="h-14 w-14 rounded-full object-cover border border-slate-200 shrink-0"
-                      />
+                return (
+                  <FadeInUp key={voice.name} delay={idx * 0.08}>
+                    <article className="h-full flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                       <div>
-                        <p className="text-base font-bold text-navy-950">
-                          {voice.name}
-                        </p>
-                        <p className="text-xs font-medium text-slate-600 mt-0.5 leading-snug">
-                          {voice.ageAndRole}
-                        </p>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="inline-block rounded-md bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">
+                            {voice.tag}
+                          </span>
+                          <GraduationCap
+                            className="h-5 w-5 text-slate-500"
+                            aria-hidden="true"
+                          />
+                        </div>
+
+                        <div className="mt-5 rounded-xl bg-navy-900 p-4 text-white">
+                          <p className="text-xs font-semibold text-sky-300">
+                            AFTER NEXT STEP
+                          </p>
+                          <p className="mt-1 text-sm font-bold leading-snug">
+                            {voice.beforeAfter}
+                          </p>
+                        </div>
+
+                        <blockquote className="mt-5 text-sm sm:text-base text-slate-700 leading-relaxed">
+                          「{voice.comment}」
+                        </blockquote>
                       </div>
-                    </div>
-                  </article>
-                </FadeInUp>
-              ))}
+
+                      <div className="mt-6 pt-5 border-t border-slate-100 flex items-center gap-4">
+                        <img
+                          src={avatarSrc}
+                          srcSet={avatarSrcSet}
+                          alt={voice.avatarAlt}
+                          width={56}
+                          height={56}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-14 w-14 rounded-full object-cover border border-slate-200 shrink-0"
+                        />
+                        <div>
+                          <p className="text-base font-bold text-navy-950">
+                            {voice.name}
+                          </p>
+                          <p className="text-xs font-medium text-slate-600 mt-0.5 leading-snug">
+                            {voice.ageAndRole}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </FadeInUp>
+                );
+              })}
             </div>
 
             <p className="mt-8 text-center text-xs text-slate-600">

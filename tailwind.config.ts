@@ -30,7 +30,17 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-noto-sans-jp)", "sans-serif"],
+        sans: [
+          '"Noto Sans JP"',
+          '"Hiragino Kaku Gothic ProN"',
+          '"Hiragino Sans"',
+          '"Yu Gothic UI"',
+          '"Yu Gothic"',
+          '"Meiryo"',
+          "system-ui",
+          "-apple-system",
+          "sans-serif",
+        ],
       },
     },
   },

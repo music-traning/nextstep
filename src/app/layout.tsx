@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-
-const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
-  display: "swap",
-  variable: "--font-noto-sans-jp",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://next-step-2027.example.com"),
@@ -30,12 +22,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-    apple: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
   openGraph: {
     title: "Next Step 2027 | AI時代に取り残されない、次世代のキャリアを。",
@@ -65,13 +53,17 @@ export const metadata: Metadata = {
 
 const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 
+const HERO_IMG_BASE = "https://images.unsplash.com/photo-1552664730-d307ca884978";
+const HERO_SRC_800 = `${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=800&q=75`;
+const HERO_SRCSET = `${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=480&q=72 480w, ${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=800&q=75 800w, ${HERO_IMG_BASE}?auto=format&fit=crop&fm=webp&w=1200&q=75 1200w`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={notoSansJP.variable}>
+    <html lang="ja">
       <head>
         <link
           rel="preconnect"
@@ -81,16 +73,19 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
+          href={HERO_SRC_800}
+          imageSrcSet={HERO_SRCSET}
+          imageSizes="(max-width: 640px) 92vw, (max-width: 1024px) 512px, 480px"
+          fetchPriority="high"
         />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-slate-900 antialiased">
-        {/* Google Analytics 4 (GA4) 測定用スクリプト */}
+        {/* Google Analytics 4 (GA4) 測定用スクリプト（初期描画・LCP完了後に遅延ロード） */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="ga4-init" strategy="afterInteractive">
+        <Script id="ga4-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
